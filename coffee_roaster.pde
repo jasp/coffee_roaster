@@ -78,6 +78,10 @@ void loop() {
     buttonState = reading;
   }
 
+  if (temp_out < 130.0) {
+    state_start = millis();
+  }
+
   switch (current_state) {
     case 0:
       digitalWrite(LED_PIN, LOW);
@@ -87,7 +91,7 @@ void loop() {
     case 1:
       digitalWrite(LED_PIN, HIGH);
       analogWrite(RELAY_PIN, 1);
-      diff = (millis() - state_start) / 1000;
+      diff = (millis() - state_start) / 500;
       motor_speed = 255 - ((diff > 115) ? 115 : diff);
       break;
   }
